@@ -8,6 +8,9 @@ const io =require("socket.io")(server)
 
 app.use(express.static(path.join(__dirname+"/public")))
 
+const hostname = '0.0.0.0'
+const port = 5000
+
 io.on("connection",function(socket){
     socket.on("newuser",function(username){
         socket.broadcast.emit("update", username + " Joined the conversation")
@@ -22,4 +25,6 @@ io.on("connection",function(socket){
     })
 })
 
-server.listen(5000);
+server.listen(port, hostname, ()=>{
+    console.log(`server running at http://${hostname}:${port}`)
+});
